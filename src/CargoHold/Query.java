@@ -1,19 +1,85 @@
 package CargoHold;
 
-import javax.swing.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Query {
 
-    private Item item;
-    static int totalWeightOfCase = 0;
-    private final Suitcase suitcase = new Suitcase(totalWeightOfCase);
-    static int totalWeightOfHold = totalWeightOfCase;
-    private final Hold hold = new Hold(totalWeightOfHold);
+    private Scanner scanner = new Scanner(System.in);
+    private static int amountOfItems;
+    private static int maximumWeight;
+    private Suitcase suitcase;
     public Query() {}
-    public void generateQuery() {
+    public void retrieveItemInfo() {
+        int counter = 0;
+        System.out.println("Amount of items?");
+        amountOfItems = scanner.nextInt();
+        System.out.println("Max weight?");
+        maximumWeight = scanner.nextInt();
+        while(counter < amountOfItems)
+        {
+            Item [] myItems = new Item[amountOfItems];
+            for(int i = 0; i < amountOfItems; i++)
+            {
+                int totalWeight = 0;
+                int index = i+1;
+                System.out.println("Name of item " + index + " ? ");
+                String nameOfItem = scanner.next();
+                System.out.println("Weight of item " + index + " ? ");
+                int weightOfItem = scanner.nextInt();
+                myItems[i] = new Item(nameOfItem,weightOfItem);
+                if(i == amountOfItems-1)
+                {
+                    for(int j = 0; j < amountOfItems; j++)
+                    {
+                        System.out.println(myItems[j]);
+                        counter++;
+                    }
+                }
+                totalWeight += myItems[i].getWeight();
+                if(totalWeight > maximumWeight)
+                {
+                    break;
+                }
+                else
+                {
+                    suitcase.addItem(); // TODO: Add items to suitcase
+                }
+
+            }
+        }
+        System.out.println(suitcase);
+    }
+
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+}
+
+
+/*
+
+
+
+
+
+Program pattern:
+
+list details with GUI window
+
+ask if the user would like to complete purchase (if no, then either quit or restart)
+
+turn into factory design?
+
+ */
+
+/*
+int counter = 0;
         JOptionPane.showMessageDialog(null, "Welcome to Cargo Hold\nPress Ok", "Cargo Hold", JOptionPane.PLAIN_MESSAGE);
-        while (true) {
+        while (counter < 3) {
             int amountOfItems = Integer.parseInt(JOptionPane.showInputDialog
                     (null, "How many items?", "Item Amount", JOptionPane.PLAIN_MESSAGE));
             Item [] myItems = new Item[amountOfItems];
@@ -32,6 +98,7 @@ public class Query {
                                 JOptionPane.WARNING_MESSAGE);
                 }
                 myItems[i] = new Item(itemName,itemWeight);
+                counter++;
             }
             totalWeightOfCase = Integer.parseInt(JOptionPane.showInputDialog
                         (null,"Enter max weight for suitcase", "Case",
@@ -40,55 +107,22 @@ public class Query {
                         (null, "Making suitcase...", "Loading case",
                                 JOptionPane.PLAIN_MESSAGE);
             suitcase.setMaxWeight(totalWeightOfCase);
+            counter++;
             for(int i = 0; i <= myItems.length-1; i++)
             {
                 int calcWeight = myItems[i].getWeight();
-                // TODO: Fix weight calculation
-                    // TODO: How to not essentially add the weight when it exceeds the total weight?
                 if(calcWeight <= totalWeightOfCase)
                 {
                     suitcase.addItem(myItems[i]);
-                    suitcase.totalWeight();
                 }
                 else
                 {
                     break;
                 }
                 calcWeight++;
-
-            }
-            System.out.println(suitcase);
-
-        }
-    }
-
-}
-
-/*
-Program pattern:
-
-list details with GUI window
-
-ask if the user would like to complete purchase (if no, then either quit or restart)
- */
-
-/*
-for(int w = 0; w <= myItems.length-1; w++)
-            {
-                totalWeightOfCase+=myItems[w].getWeight();
-            }
-            suitcase.setMaxWeight(totalWeightOfCase);
-            JOptionPane.showMessageDialog(null, "Selecting hold...", "Loading hold", JOptionPane.PLAIN_MESSAGE);
-            for(int i = 0; i <= myItems.length-1; i++)
-            {
-                suitcase.addItem(myItems[i]);
                 hold.addSuitcase(suitcase);
-                hold.setMaxWeight(totalWeightOfHold+=totalWeightOfCase);
+                hold.setMaxWeight(suitcase.totalWeight());
+                counter++;
             }
-            hold.setMaxWeight(hold.getMaxWeight()/2);
-            JOptionPane.showMessageDialog(null, "WORKING OUT THE DETAILS", "...", JOptionPane.INFORMATION_MESSAGE);
-            JOptionPane.showMessageDialog(null, "Done.", "...", JOptionPane.PLAIN_MESSAGE);
             System.out.println(suitcase);
-            System.out.println();
-            System.out.println(hold);
  */

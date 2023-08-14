@@ -1,5 +1,4 @@
 package CargoHold;
-
 public class Item
 {
     private String name;
@@ -9,23 +8,18 @@ public class Item
         this.name = name;
         this.weight = weight;
     }
-
     public int getWeight() {
         return weight;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public void setWeight(int weight) {
         this.weight = weight;
     }
-
     @Override
     public String toString()
     {
