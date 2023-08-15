@@ -5,16 +5,28 @@ import java.util.*;
 public class Query {
 
     private Scanner scanner = new Scanner(System.in);
-    private static int amountOfItems;
-    private static int maximumWeight;
-    private Suitcase suitcase;
+
+    Hold hold = new Hold(10000);
+    static int totalWeightOfHold = 0;
     public Query() {}
+
+    public void cargoBuilder()
+    {
+        while(retrieveRepeat())
+        {
+            retrieveItemInfo();
+        }
+    }
+
     public void retrieveItemInfo() {
+        int amountOfItems;
+        int maximumWeight;
         int counter = 0;
         System.out.println("Amount of items?");
         amountOfItems = scanner.nextInt();
         System.out.println("Max weight?");
         maximumWeight = scanner.nextInt();
+        Suitcase suitcase = new Suitcase(maximumWeight);
         while(counter < amountOfItems)
         {
             Item [] myItems = new Item[amountOfItems];
@@ -40,14 +52,20 @@ public class Query {
                 {
                     break;
                 }
-                else
-                {
-                    suitcase.addItem(); // TODO: Add items to suitcase
-                }
-
+                suitcase.addItem(myItems[i]);
             }
         }
-        System.out.println(suitcase);
+        System.out.println("suitcase has: " + suitcase);
+        totalWeightOfHold += suitcase.totalWeight();
+        hold.addSuitcase(suitcase);
+        hold.setMaxWeight(totalWeightOfHold); // TODO: Fix weight addition
+        System.out.println("hold has: " + hold);
+    }
+    private boolean retrieveRepeat()
+    {
+        System.out.println("Would you like to add a suitcase? (1=yes, 2=no) ");
+        int repeatChoice = scanner.nextInt();
+        return repeatChoice == 1;
     }
 
     public Scanner getScanner() {
