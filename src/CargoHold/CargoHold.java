@@ -126,9 +126,9 @@ public class CargoHold {
     {
         int lengthOfArray = value.length()-1;
         char[] charArray = new char[lengthOfArray];
-        for (int i = 0; i < lengthOfArray - 1; i++) {
+        for (int i = 0; i < lengthOfArray; i++) {
             charArray[i] = (char) value.indexOf(i);
-            if (!Character.isDigit(charArray[i])) {
+            if (!Character.isDigit(charArray[i])) { // TODO: Not working for a single char input
                 throw new ChoiceException("Please enter a number");
             }
         }
@@ -137,12 +137,13 @@ public class CargoHold {
     static void checkCharInput(String value) throws ChoiceException {
         int lengthOfArray = value.length()-1;
         char[] charArray = new char[lengthOfArray];
-        for (int i = 0; i < lengthOfArray - 1; i++) {
+        for (int i = 0; i < lengthOfArray; i++) {
             charArray[i] = (char) value.indexOf(i);
             if (Character.isDigit(charArray[i])) {
                 throw new ChoiceException("Please enter a word");
             }
         }
     }
+
 
 }
