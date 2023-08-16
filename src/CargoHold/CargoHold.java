@@ -96,8 +96,6 @@ public class CargoHold {
         hold.addSuitcase(suitcase);
         hold.setMaxWeight(totalWeightOfHold); // TODO: Fix weight addition
         System.out.println("hold has: " + hold);
-
-
     }
     private boolean retrieveRepeat()
     {
@@ -128,7 +126,7 @@ public class CargoHold {
         char[] charArray = new char[lengthOfArray];
         for (int i = 0; i < lengthOfArray; i++) {
             charArray[i] = (char) value.indexOf(i);
-            if (!Character.isDigit(charArray[i])) { // TODO: Not working for a single char input
+            if (!Character.isDigit(charArray[i])) {
                 throw new ChoiceException("Please enter a number");
             }
         }
@@ -144,6 +142,5 @@ public class CargoHold {
             }
         }
     }
-
 
 }
