@@ -3,20 +3,11 @@ package CargoHold;
 import java.util.*;
 
 public class Hold {
-    private ArrayList<Suitcase> suitcases = new ArrayList<>();
+    private final ArrayList<Suitcase> suitcases = new ArrayList<>();
     private int maxWeight;
     public Hold(int maxWeight)
     {
         this.maxWeight = maxWeight;
-    }
-    public ArrayList<Suitcase> getSuitcases() {
-        return suitcases;
-    }
-    public void setSuitcases(ArrayList<Suitcase> suitcases) {
-        this.suitcases = suitcases;
-    }
-    public int getMaxWeight() {
-        return maxWeight;
     }
     public void setMaxWeight(int maxWeight) {
         this.maxWeight = maxWeight;
@@ -33,14 +24,6 @@ public class Hold {
     }
     public void addSuitcase(Suitcase suitcase) {
         this.suitcases.add(suitcase);
-    }
-
-    public void printItems()
-    {
-        for(int i = 0; i <= suitcases.size()-1; i++)
-        {
-            System.out.println(suitcases.get(i).getItems());
-        }
     }
 
     public double holdCost()

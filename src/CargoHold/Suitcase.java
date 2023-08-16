@@ -56,25 +56,4 @@ public class Suitcase {
 
         return itemString;
     }
-
-    public void printItems()
-    {
-        for(int i = 0; i <= items.size()-1; i++)
-        {
-            System.out.println(items.get(i));
-        }
-    }
-
-    public Item heaviestItem()
-    {
-        Item heavyItem = this.items.get(0);
-        for(int i = 0; i <= items.size()-1; i++)
-        {
-            if(heavyItem.getWeight() < items.get(i).getWeight())
-            {
-                heavyItem = items.get(i);
-            }
-        }
-        return heavyItem;
-    }
 }

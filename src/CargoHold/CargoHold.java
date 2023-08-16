@@ -5,8 +5,7 @@ import java.util.*;
 public class CargoHold {
 
     private static Scanner scanner = new Scanner(System.in);
-
-    static Hold hold = new Hold(10000);
+    static Hold hold = new Hold(0);
     static int totalWeightOfHold = 0;
     public CargoHold() {}
 
@@ -74,6 +73,15 @@ public class CargoHold {
                         retrieveItemInfo();
                     }
                     int convertWeightOfItem = Integer.parseInt(weightOfItem);
+                    totalWeightOfHold = convertWeightOfItem;
+                    try
+                    {
+                        checkWeightInput(convertWeightOfItem);
+                    }catch(WeightException e)
+                    {
+                        System.out.println("ERROR: " + e);
+                        retrieveItemInfo();
+                    }
                     myItems[i] = new Item(nameOfItem,convertWeightOfItem);
                     if(i == convertItemAmount-1)
                     {
@@ -92,9 +100,10 @@ public class CargoHold {
                 }
             }
         System.out.println("suitcase has: " + suitcase);
+        totalWeightOfHold = 0;
         totalWeightOfHold += suitcase.totalWeight();
         hold.addSuitcase(suitcase);
-        hold.setMaxWeight(totalWeightOfHold); // TODO: Fix weight addition
+        hold.setMaxWeight(totalWeightOfHold);
         System.out.println("hold has: " + hold);
     }
     private boolean retrieveRepeat()
@@ -124,14 +133,13 @@ public class CargoHold {
     {
         int lengthOfArray = value.length()-1;
         char[] charArray = new char[lengthOfArray];
-        for (int i = 0; i < lengthOfArray; i++) {
+        for (int i = 0; i < lengthOfArray-1; i++) {
             charArray[i] = (char) value.indexOf(i);
             if (!Character.isDigit(charArray[i])) {
                 throw new ChoiceException("Please enter a number");
             }
         }
     }
-
     static void checkCharInput(String value) throws ChoiceException {
         int lengthOfArray = value.length()-1;
         char[] charArray = new char[lengthOfArray];
@@ -143,4 +151,11 @@ public class CargoHold {
         }
     }
 
+    static void checkWeightInput(int value) throws WeightException
+    {
+        if(value > totalWeightOfHold)
+        {
+            throw new WeightException("TOO HEAVY");
+        }
+    }
 }
