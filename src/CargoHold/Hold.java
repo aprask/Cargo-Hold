@@ -43,8 +43,15 @@ public class Hold {
         }
     }
 
+    public double holdCost()
+    {
+        return (sumOfWeight())*.75; // sum of weight * amount of cases * .75
+    }
+
     @Override
     public String toString() {
-        return this.suitcases.size() + " suitcases " + sumOfWeight() + " kg.";
+        return
+                this.suitcases.size() + " suitcases " + sumOfWeight() + " kg."
+                + "\nCost: " + holdCost();
     }
 }
