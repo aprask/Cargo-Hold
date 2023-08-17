@@ -6,6 +6,7 @@ public class CargoHold {
 
     private static Scanner scanner = new Scanner(System.in);
     static Hold hold = new Hold(0);
+    static Suitcase suitcase = new Suitcase(0);
     static int totalWeightOfHold = 0;
     public CargoHold() {}
 
@@ -20,8 +21,10 @@ public class CargoHold {
     public static void retrieveItemInfo() {
         String amountOfItems;
         String maximumWeight;
+        int convertItemAmount = 0;
+        int convertMaxWeight = 0;
         int counter = 0;
-        System.out.println("Amount of items?");
+        System.out.println("Amount? ");
         amountOfItems = scanner.next();
         try
         {
@@ -31,7 +34,7 @@ public class CargoHold {
             System.out.println("ERROR: " + e);
             retrieveItemInfo();
         }
-        System.out.println("Max weight?");
+        System.out.println("Max weight? ");
         maximumWeight = scanner.next();
         try
         {
@@ -41,72 +44,70 @@ public class CargoHold {
             System.out.println("ERROR: " + e);
             retrieveItemInfo();
         }
-        int convertItemAmount = Integer.parseInt(amountOfItems);
-        int convertMaxWeight = Integer.parseInt(maximumWeight);
-        Suitcase suitcase = new Suitcase(convertMaxWeight);
+        convertItemAmount = Integer.parseInt(amountOfItems);
+        convertMaxWeight = Integer.parseInt(maximumWeight);
+        suitcase.setMaxWeight(convertMaxWeight);
         while(counter < convertItemAmount)
         {
             Item [] myItems = new Item[convertItemAmount];
 
-                for(int i = 0; i < convertItemAmount; i++)
+            for(int i = 0; i < convertItemAmount; i++)
+            {
+                int totalWeight = 0;
+                int index = i+1;
+                System.out.println("Name of item " + index + " ? ");
+                String nameOfItem = scanner.next();
+                try
                 {
-                    int totalWeight = 0;
-                    int index = i+1;
-                    System.out.println("Name of item " + index + " ? ");
-                    String nameOfItem = scanner.next();
-                    try
-                    {
-                        checkCharInput(nameOfItem);
-                    } catch(Exception e)
-                    {
-                        System.out.println("ERROR: " + e);
-                        retrieveItemInfo();
-                    }
-                    System.out.println("Weight of item " + index + " ? ");
-                    String weightOfItem = scanner.next();
-                    try
-                    {
-                        checkIntInput(weightOfItem);
-                    } catch(Exception e)
-                    {
-                        System.out.println("ERROR: " + e);
-                        retrieveItemInfo();
-                    }
-                    int convertWeightOfItem = Integer.parseInt(weightOfItem);
-                    totalWeightOfHold = convertWeightOfItem;
-                    try
-                    {
-                        checkWeightInput(convertWeightOfItem);
-                    }catch(WeightException e)
-                    {
-                        System.out.println("ERROR: " + e);
-                        retrieveItemInfo();
-                    }
-                    myItems[i] = new Item(nameOfItem,convertWeightOfItem);
-                    if(i == convertItemAmount-1)
-                    {
-                        for(int j = 0; j < convertItemAmount; j++)
-                        {
-                            System.out.println(myItems[j]);
-                            counter++;
-                        }
-                    }
-                    totalWeight += myItems[i].getWeight();
-                    if(totalWeight > convertMaxWeight)
-                    {
-                        break;
-                    }
-                    suitcase.addItem(myItems[i]);
+                    checkCharInput(nameOfItem);
+                } catch(Exception e)
+                {
+                    System.out.println("ERROR: " + e);
+                    retrieveItemInfo();
                 }
+                System.out.println("Weight of item " + index + " ? ");
+                String weightOfItem = scanner.next();
+                try
+                {
+                    checkIntInput(weightOfItem);
+                } catch(Exception e)
+                {
+                    System.out.println("ERROR: " + e);
+                    retrieveItemInfo();
+                }
+                int convertWeightOfItem = Integer.parseInt(weightOfItem);
+                totalWeightOfHold = convertWeightOfItem;
+                try
+                {
+                    checkWeightInput(convertWeightOfItem);
+                }catch(WeightException e)
+                {
+                    System.out.println("ERROR: " + e);
+                    retrieveItemInfo();
+                }
+                myItems[i] = new Item(nameOfItem,convertWeightOfItem);
+                if(i == convertItemAmount-1)
+                {
+                    for(int j = 0; j < convertItemAmount; j++)
+                    {
+                        System.out.println(myItems[j]);
+                        counter++;
+                    }
+                }
+                totalWeight += myItems[i].getWeight();
+                if(totalWeight > convertMaxWeight)
+                {
+                    break;
+                }
+                suitcase.addItem(myItems[i]);
             }
-        System.out.println("suitcase has: " + suitcase);
-        totalWeightOfHold = 0;
-        totalWeightOfHold += suitcase.totalWeight();
+        }
+        totalWeightOfHold += suitcase.getMaxWeight();
         hold.addSuitcase(suitcase);
         hold.setMaxWeight(totalWeightOfHold);
         System.out.println("hold has: " + hold);
     }
-    private boolean retrieveRepeat()
+    private static boolean retrieveRepeat()
     {
         System.out.println("Would you like to add a suitcase? (1=yes, 2=no) ");
         int repeatChoice = scanner.nextInt();
@@ -129,14 +130,13 @@ public class CargoHold {
         CargoHold.scanner = scanner;
     }
 
-    static void checkIntInput(String value) throws ChoiceException
-    {
+    static void checkIntInput(String value) throws ChoiceException {
         int lengthOfArray = value.length()-1;
         char[] charArray = new char[lengthOfArray];
-        for (int i = 0; i < lengthOfArray-1; i++) {
+        for (int i = 0; i < lengthOfArray; i++) {
             charArray[i] = (char) value.indexOf(i);
-            if (!Character.isDigit(charArray[i])) {
-                throw new ChoiceException("Please enter a number");
+            if (Character.isDigit(charArray[i])) {
+                throw new ChoiceException("Please enter a word");
             }
         }
     }
@@ -150,7 +150,6 @@ public class CargoHold {
             }
         }
     }
-
     static void checkWeightInput(int value) throws WeightException
     {
         if(value > totalWeightOfHold)

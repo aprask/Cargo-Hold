@@ -8,7 +8,7 @@ public class Main {
 }
 /*
 TODO:
-   1) Fix Weight exception
-   2) Fix weight addition
+   2) Fix logic
    3) Turn ints (for weight) into floats
+   4) Create tests
  */
