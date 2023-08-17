@@ -3,12 +3,6 @@ public class Main {
     public static void main(String[] args)
     {
         CargoHold cargoHold = new CargoHold();
-        cargoHold.cargoBuilder();
+        cargoHold.catalogItem(2,50);
     }
 }
-/*
-TODO:
-   2) Fix logic
-   3) Turn ints (for weight) into floats
-   4) Create tests
- */
