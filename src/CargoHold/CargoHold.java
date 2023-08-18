@@ -13,12 +13,14 @@ public class CargoHold {
     public void catalogItem(int amount, int maxWeight)
     {
         Item [] myItems = new Item[amount];
-        int weightUsed = 0;
+        int trackWeight = 0;
+        int weightLeft = 0;
+        int currentAmount = amount;
         for(int i = 0; i < amount; i++)
         {
-            System.out.println("Room: " + amount);
+            System.out.println("Room Left: " + currentAmount);
             System.out.println("Total Weight: " + maxWeight);
-            System.out.println("Weight Used: " + weightUsed);
+            System.out.println("Weight Left: " + weightLeft);
             int index = i + 1;
             System.out.println("Name of item #" + index + " ? ");
             String nameOfItem = scanner.next();
@@ -29,17 +31,24 @@ public class CargoHold {
             }
             System.out.println("How much does " + nameOfItem + " weigh? ");
             String weightOfItem = scanner.next();
+/*
             if(checkIntInput(weightOfItem))
             {
                 System.out.println("This is not an appropriate weight");
                 break;
             }
+ */
             int convertWeight = Integer.parseInt(weightOfItem);
             myItems[i] = new Item(nameOfItem, convertWeight);
             suitcase.addItem(myItems[i]);
             hold.addSuitcase(suitcase);
-            weightUsed += maxWeight - convertWeight;
-            hold.setMaxWeight(weightUsed);
+            trackWeight = trackWeight + convertWeight;
+            weightLeft += maxWeight - convertWeight;
+            currentAmount--;
+            if(i == amount-1)
+            {
+                hold.setMaxWeight(trackWeight);
+            }
         }
         System.out.println(hold);
     }
