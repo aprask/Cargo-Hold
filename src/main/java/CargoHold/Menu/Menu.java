@@ -73,7 +73,7 @@ public class Menu extends JFrame implements ActionListener {
         if(e.getSource()==openReceipt)
         {
             try {
-                cargoHold.openReceipt();
+                displayReceipt();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -86,5 +86,9 @@ public class Menu extends JFrame implements ActionListener {
         {
             cargoHold.catalogItem(2,50);
         }
+    }
+    public void displayReceipt() throws IOException {
+
+        cargoHold.openReceipt();
     }
 }
