@@ -1,5 +1,4 @@
 package CargoHold.Factors;
-
 /**
  * Item allows users to specify the name and weight of an individual item before it is placed in a suitcase
  * @author skalg

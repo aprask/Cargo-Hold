@@ -1,9 +1,6 @@
 package CargoHold;
 
-import CargoHold.Factors.Hold;
-import CargoHold.Factors.Item;
-import CargoHold.Factors.Suitcase;
-
+import CargoHold.Factors.*;
 import java.util.*;
 
 /**
