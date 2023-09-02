@@ -1,6 +1,6 @@
 # Cargo Hold
 
-This project is a Java desktop application w/ GUI to store items within a cargo hold
+This project is a Java desktop application w/ GUI to store items within a simulated cargo hold.
 
 ## About
 
