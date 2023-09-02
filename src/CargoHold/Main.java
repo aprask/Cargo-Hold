@@ -1,4 +1,9 @@
 package CargoHold;
+/**
+ * Cargo Hold Main class
+ * @author skalg
+ *
+ */
 public class Main {
     public static void main(String[] args)
     {
