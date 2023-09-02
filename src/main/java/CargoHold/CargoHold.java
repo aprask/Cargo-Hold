@@ -1,7 +1,9 @@
 package CargoHold;
 
 import CargoHold.Factors.*;
+import CargoHold.Menu.*;
 import java.util.*;
+import javax.swing.*;
 
 /**
  * Cargo Hold allows the user to combine the three other previous classes located in the "Factors" package folder
@@ -14,6 +16,7 @@ public class CargoHold {
     private static final Scanner scanner = new Scanner(System.in);
     static Hold hold = new Hold(0);
     static Suitcase suitcase = new Suitcase(0);
+    static Menu menu = new Menu();
     static int totalWeightOfHold = 0;
     public CargoHold() {}
 
@@ -22,6 +25,21 @@ public class CargoHold {
      * @param amount amount of room/capacity
      * @param maxWeight sets the ceiling for the weight
      */
+
+    /*
+    TODO: add gui
+     */
+    public void catalogItem(int amount, int maxWeight)
+    {
+        Item[] myItems = new Item[amount];
+        int trackWeight = 0;
+        int currentAmount = amount;
+        for(int i = 0; i < amount; i++)
+        {
+
+        }
+    }
+    /*
     public void catalogItem(int amount, int maxWeight)
     {
         Item[] myItems = new Item[amount];
@@ -54,6 +72,7 @@ public class CargoHold {
         }
         System.out.println(hold);
     }
+     */
 
     /**
      *
@@ -87,14 +106,5 @@ public class CargoHold {
             }
         }
         return false;
-    }
-    /**
-     *
-     * @param value checks to see if the weight typed exceeds the current weight of the hold
-     * @return return true if the input value exceeds the threshold
-     */
-    static boolean checkWeightInput(int value)
-    {
-        return value > totalWeightOfHold;
     }
 }
