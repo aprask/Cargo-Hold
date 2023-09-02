@@ -12,19 +12,6 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args)
     {
-        /*
-        CargoHold cargoHold = new CargoHold();
-        cargoHold.catalogItem(2,50);
-         */
-
         Menu menu = new Menu();
-        if(menu.getProceedValue())
-        {
-            System.out.println("start");
-        }
-        else if(menu.getProceedValue())
-        {
-            System.out.println("exit");
-        }
     }
 }

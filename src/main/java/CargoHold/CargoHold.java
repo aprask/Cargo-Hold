@@ -2,6 +2,8 @@ package CargoHold;
 
 import CargoHold.Factors.*;
 import CargoHold.Menu.*;
+
+import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
@@ -18,6 +20,7 @@ public class CargoHold {
     static Suitcase suitcase = new Suitcase(0);
     static Menu menu = new Menu();
     static int totalWeightOfHold = 0;
+
     public CargoHold() {}
 
     /**
@@ -25,10 +28,6 @@ public class CargoHold {
      * @param amount amount of room/capacity
      * @param maxWeight sets the ceiling for the weight
      */
-
-    /*
-    TODO: add gui
-     */
     public void catalogItem(int amount, int maxWeight)
     {
         Item[] myItems = new Item[amount];
@@ -36,29 +35,34 @@ public class CargoHold {
         int currentAmount = amount;
         for(int i = 0; i < amount; i++)
         {
-
-        }
-    }
-    /*
-    public void catalogItem(int amount, int maxWeight)
-    {
-        Item[] myItems = new Item[amount];
-        int trackWeight = 0;
-        int currentAmount = amount;
-        for(int i = 0; i < amount; i++)
-        {
-            System.out.println("Room Left: " + currentAmount);
-            System.out.println("Total Weight: " + maxWeight);
+            JOptionPane.showMessageDialog
+                    (
+                            null,
+                            "Room Left: " + currentAmount,
+                            "Room Info",
+                            JOptionPane.PLAIN_MESSAGE
+                    );
+            JOptionPane.showMessageDialog
+                    (
+                            null,
+                            "Weight Capacity: " + maxWeight,
+                            "Storage Info",
+                            JOptionPane.PLAIN_MESSAGE
+                    );
             int index = i + 1;
-            System.out.println("Name of item #" + index + " ? ");
-            String nameOfItem = scanner.next();
+            String nameOfItem = JOptionPane.showInputDialog("Name of item #" + index + "? ");
             if(checkCharInput(nameOfItem))
             {
-                System.out.println("This is not an appropriate name");
+                JOptionPane.showMessageDialog
+                        (
+                                null,
+                                "This is not an appropriate name!",
+                                "!",
+                                JOptionPane.WARNING_MESSAGE
+                        );
                 break;
             }
-            System.out.println("How much does " + nameOfItem + " weigh? ");
-            String weightOfItem = scanner.next();
+            String weightOfItem = JOptionPane.showInputDialog("Weight of item? ");
             int convertWeight = Integer.parseInt(weightOfItem);
             myItems[i] = new Item(nameOfItem, convertWeight);
             suitcase.addItem(myItems[i]);
@@ -70,25 +74,18 @@ public class CargoHold {
                 hold.setMaxWeight(trackWeight);
             }
         }
-        System.out.println(hold);
-    }
-     */
-
-    /**
-     *
-     * @param value checks to see if the value is a digit
-     * @return return true if not int
-     */
-    static boolean checkIntInput(String value) {
-        int lengthOfArray = value.length()-1;
-        char[] charArray = new char[lengthOfArray];
-        for (int i = 0; i < lengthOfArray; i++) {
-            charArray[i] = (char) value.indexOf(i);
-            if (!Character.isDigit(charArray[i])) {
-                return true;
-            }
+        JOptionPane.showMessageDialog
+                (
+                        null,
+                        hold,
+                        "Result",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+        try {
+            createReceipt(hold);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return false;
     }
 
     /**
@@ -106,5 +103,33 @@ public class CargoHold {
             }
         }
         return false;
+    }
+
+    public void createReceipt(Hold hold) throws IOException {
+        BufferedWriter bufferedWriter;
+        {
+            try {
+                bufferedWriter = new BufferedWriter(new FileWriter("result.txt"));
+                bufferedWriter.write("Receipt:\n " + hold);
+                bufferedWriter.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        BufferedReader bufferedReader;
+        try {
+            bufferedReader = new BufferedReader(new FileReader("result.txt"));
+            String storeLine;
+            while((storeLine = bufferedReader.readLine()) != null)
+            {
+                System.out.println(storeLine);
+            }
+            bufferedReader.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void openReceipt() throws IOException {
+        createReceipt(hold);
     }
 }

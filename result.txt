@@ -1,0 +1,3 @@
+Receipt:
+ 2 suitcases 10 kg.
+Cost: 7.5
